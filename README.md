@@ -109,7 +109,7 @@ Acesse o projeto no navegador:
 ## 🤝 Contribuidores  
 Um projeto feito com muito carinho por:
 
-<img src="https://avatars.githubusercontent.com/u/luger-mano?v=4" width=115>  
+<img src="[https://avatars.githubusercontent.com/u/luger-mano?v=4](https://avatars.githubusercontent.com/u/172287862?v=4)" width=115>  
 <sub>Lucas Germano</sub>
 
 ---
