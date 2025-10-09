@@ -1,17 +1,23 @@
 package com.vovo.croche.model;
 
 
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+@Entity
+@Table(name = "TABLE_ADDRESSES")
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
 public class Address {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
     private String cep;
     private String logradouro;
     private String complemento;
