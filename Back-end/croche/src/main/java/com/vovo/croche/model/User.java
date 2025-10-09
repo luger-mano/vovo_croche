@@ -30,7 +30,8 @@ public class User implements Serializable {
     private String email;
     private String password;
     private String phone;
-//    private Address address;
+    @OneToOne
+    private Address address;
     @Enumerated(EnumType.STRING)
     private UserType userType;
 }
