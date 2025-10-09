@@ -9,11 +9,8 @@ import java.time.LocalDate;
 @Setter
 public class UserResponseDTO {
     
-    private String name;
-    private String middleName;
+    private String fullName;
     private String email;
     private String password;
-    private String cpf;
     private String phone;
-    private LocalDate birth;
 }

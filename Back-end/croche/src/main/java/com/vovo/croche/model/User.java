@@ -26,13 +26,11 @@ public class User implements Serializable {
     @GeneratedValue(generator = "UUID")
     @Column(updatable = false, nullable = false, columnDefinition = "CHAR(36)")
     private UUID id;
-    private String name;
-    private String middleName;
+    private String fullName;
     private String email;
     private String password;
-    private String cpf;
     private String phone;
-    private LocalDate birth;
+//    private Address address;
     @Enumerated(EnumType.STRING)
     private UserType userType;
 }
