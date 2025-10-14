@@ -1,15 +1,16 @@
 package com.vovo.croche.model;
 
 
-import com.vovo.croche.enums.UserType;
+import com.vovo.croche.model.dto.token.LoginRequestDTO;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.io.Serial;
 import java.io.Serializable;
-import java.time.LocalDate;
+import java.util.Set;
 import java.util.UUID;
 
 @Entity
@@ -23,8 +24,8 @@ public class User implements Serializable {
     private static final long serialVersionUUID = 1L;
 
     @Id
-    @GeneratedValue(generator = "UUID")
-    @Column(updatable = false, nullable = false, columnDefinition = "CHAR(36)")
+    @GeneratedValue(strategy = GenerationType.UUID)
+    @Column(name = "user_id", updatable = false, nullable = false, columnDefinition = "CHAR(36)")
     private UUID id;
     private String fullName;
     private String email;
@@ -32,6 +33,15 @@ public class User implements Serializable {
     private String phone;
     @OneToOne
     private Address address;
-    @Enumerated(EnumType.STRING)
-    private UserType userType;
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinTable(
+            name = "TABLE_USERS_ROLES",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "role_id")
+    )
+    private Set<Role> roles;
+
+    public boolean isLoginCorrect(LoginRequestDTO dto, PasswordEncoder passwordEncoder) {
+        return passwordEncoder.matches(dto.getPassword(), this.password);
+    }
 }
