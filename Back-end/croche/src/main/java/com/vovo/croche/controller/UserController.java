@@ -1,10 +1,12 @@
 package com.vovo.croche.controller;
 
+import com.vovo.croche.model.dto.admin.UsersResponseAdminDTO;
 import com.vovo.croche.model.dto.user.UserNewPasswordRequestDTO;
 import com.vovo.croche.model.dto.user.UserRequestDTO;
 import com.vovo.croche.model.dto.user.UserResponseDTO;
 import com.vovo.croche.service.UserService;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -20,25 +22,32 @@ public class UserController {
     }
 
     @PostMapping
-    public ResponseEntity<UserResponseDTO> saveUser(@RequestBody UserRequestDTO dto){
+    public ResponseEntity<UserResponseDTO> saveUser(@RequestBody UserRequestDTO dto) {
         UserResponseDTO user = service.saveUser(dto);
         return ResponseEntity.ok(user);
     }
 
     @GetMapping
-    public ResponseEntity<List<UserResponseDTO>> getAllUsers(){
-        List<UserResponseDTO> listUser = service.getUsers();
+    @PreAuthorize("hasAuthority('SCOPE_ADMIN')")
+    public ResponseEntity<List<UsersResponseAdminDTO>> getAllUsers() {
+        List<UsersResponseAdminDTO> listUser = service.getUsers();
         return ResponseEntity.ok(listUser);
     }
 
     @GetMapping("/{email}")
-    public ResponseEntity<UserResponseDTO> getUserByEmail(@PathVariable String email){
+    public ResponseEntity<UserResponseDTO> getUserByEmail(@PathVariable("email") String email) {
         UserResponseDTO user = service.getUserByEmail(email);
         return ResponseEntity.ok(user);
     }
 
+
+    /**
+     * Necessário enviar email com um token para o usuário
+     * para que ele possa redefinir a senha.
+     * LÓGICA PARA ENVIAR TOKEN POR EMAIL E REDEFINIR A SENHA
+     */
     @PutMapping("/new-password")
-    public ResponseEntity<UserResponseDTO> updatePasswordUser(@RequestBody UserNewPasswordRequestDTO user){
+    public ResponseEntity<UserResponseDTO> updatePasswordUser(@RequestBody UserNewPasswordRequestDTO user) {
         UserResponseDTO userPass = service.updatePassword(user);
         return ResponseEntity.ok(userPass);
     }
