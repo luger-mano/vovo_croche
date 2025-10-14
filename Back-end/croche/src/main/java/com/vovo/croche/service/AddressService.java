@@ -1,15 +1,11 @@
 package com.vovo.croche.service;
 
-import com.fasterxml.jackson.core.JsonParser;
 import com.google.gson.Gson;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
 import com.google.gson.reflect.TypeToken;
-import com.vovo.croche.mappers.AddressMapper;
+import com.vovo.croche.mappers.address.AddressMapper;
 import com.vovo.croche.model.Address;
 import com.vovo.croche.model.dto.address.AddressRequestDTO;
 import com.vovo.croche.model.dto.address.AddressResponseDTO;
-import org.apache.tomcat.util.json.JSONParser;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;

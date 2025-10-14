@@ -1,11 +1,10 @@
-package com.vovo.croche.mappers;
+package com.vovo.croche.mappers.address;
 
 
 import com.vovo.croche.model.Address;
 import com.vovo.croche.model.dto.address.AddressRequestDTO;
 import com.vovo.croche.model.dto.address.AddressResponseDTO;
 import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
 
 @Mapper(componentModel = "spring")
 public interface AddressMapper {

@@ -1,4 +1,4 @@
-package com.vovo.croche.repositories;
+package com.vovo.croche.repository;
 
 import com.vovo.croche.model.User;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -10,4 +10,6 @@ public interface UserRepository extends JpaRepository<User, UUID> {
     boolean existsByEmail(String email);
 
     Optional<User> findByEmail(String email);
+
+    Optional<User> findByFullName(String admin);
 }

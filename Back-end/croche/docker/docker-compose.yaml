@@ -1,0 +1,13 @@
+services:
+  mysql:
+    image: mysql
+    container_name: mysql_vovo_croche
+    ports:
+      - "3306:3306"
+    expose:
+      - "3306"
+    environment:
+      - MYSQL_USER=admin
+      - MYSQL_PASSWORD=steve3571
+      - MYSQL_DATABASE=vovo_croche
+      - MYSQL_ROOT_PASSWORD=steve3571
