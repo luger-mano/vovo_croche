@@ -13,12 +13,14 @@ import com.vovo.croche.repository.UserRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationToken;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
+import java.util.UUID;
 
 @Service
 public class UserService {
@@ -86,6 +88,27 @@ public class UserService {
             repository.save(userExist);
 
             return mapper.usertoUserResponseDTO(userExist);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Transactional
+    public String deleteUser(UUID id, JwtAuthenticationToken token){
+        try {
+            User userOpp = this.repository.findById(UUID.fromString(token.getName()))
+                    .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+
+            var isAdmin = userOpp.getRoles()
+                    .stream()
+                    .anyMatch(role ->
+                            role.getName().equalsIgnoreCase(Role.Values.ADMIN.name()));
+
+            if (isAdmin || userOpp.getId().equals(UUID.fromString(token.getName()))) {
+                repository.deleteById(id);
+                return "Usuário deletado com sucesso.";
+            }
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }

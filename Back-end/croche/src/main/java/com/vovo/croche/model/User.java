@@ -28,6 +28,7 @@ public class User implements Serializable {
     @Column(name = "user_id", updatable = false, nullable = false, columnDefinition = "CHAR(36)")
     private UUID id;
     private String fullName;
+    @Column(unique = true, nullable = false)
     private String email;
     private String password;
     private String phone;

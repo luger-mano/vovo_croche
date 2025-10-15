@@ -7,9 +7,11 @@ import com.vovo.croche.model.dto.user.UserResponseDTO;
 import com.vovo.croche.service.UserService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationToken;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/users")
@@ -50,6 +52,13 @@ public class UserController {
     public ResponseEntity<UserResponseDTO> updatePasswordUser(@RequestBody UserNewPasswordRequestDTO user) {
         UserResponseDTO userPass = service.updatePassword(user);
         return ResponseEntity.ok(userPass);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<String> deleteUserById(@PathVariable("id") UUID id,
+                                                 JwtAuthenticationToken token) {
+        String deletedUser = this.service.deleteUser(id, token);
+        return ResponseEntity.status(200).body(deletedUser);
     }
 
 }
