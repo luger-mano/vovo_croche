@@ -4,8 +4,10 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.vovo.croche.mappers.address.AddressMapper;
 import com.vovo.croche.model.Address;
+import com.vovo.croche.model.dto.address.AddressCepRequestDTO;
 import com.vovo.croche.model.dto.address.AddressRequestDTO;
 import com.vovo.croche.model.dto.address.AddressResponseDTO;
+import net.minidev.json.JSONObject;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
@@ -29,8 +31,7 @@ public class AddressService {
         this.mapper = mapper;
     }
 
-    public List<AddressResponseDTO> searchForCepsThroughTheStreets(AddressRequestDTO dto) throws IOException,
-            InterruptedException {
+    public List<AddressResponseDTO> searchForCepsThroughTheStreets(AddressRequestDTO dto) {
 
         String sensitiveLogradouro = dto.getLogradouro().toLowerCase(Locale.ROOT);
         String sensitiveLocalidade = dto.getLocalidade().toLowerCase(Locale.ROOT);
@@ -69,4 +70,44 @@ public class AddressService {
             throw new RuntimeException(e);
         }
     }
+
+    public AddressResponseDTO searchAddressByCep(AddressCepRequestDTO dto) throws IOException, InterruptedException {
+
+        try {
+            Gson gson = new Gson();
+
+            HttpClient client = HttpClient.newHttpClient();
+
+            HttpRequest request = HttpRequest.newBuilder()
+                    .uri(URI.create("https://viacep.com.br/ws/" + dto.getCep() + "/json/"))
+                    .GET()
+                    .build();
+
+            HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+
+            String responseBody = response.body();
+
+            if (!responseBody.isBlank()) {
+                Address object = gson.fromJson(responseBody, Address.class);
+
+                AddressResponseDTO addressResponse = new AddressResponseDTO();
+
+                addressResponse.setCep(object.getCep());
+                addressResponse.setLogradouro(object.getLogradouro());
+                addressResponse.setUnidade(dto.getUnidade());
+                addressResponse.setComplemento(dto.getComplemento());
+                addressResponse.setLocalidade(object.getLocalidade());
+                addressResponse.setBairro(object.getBairro());
+                addressResponse.setUf(object.getUf());
+                addressResponse.setEstado(object.getEstado());
+
+                return addressResponse;
+            }
+
+            return new AddressResponseDTO();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
 }

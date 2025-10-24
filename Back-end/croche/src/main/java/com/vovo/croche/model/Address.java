@@ -21,6 +21,7 @@ public class Address {
     private String cep;
     private String logradouro;
     private String complemento;
+    @Column(name = "number_address")
     private String unidade;
     private String bairro;
     private String localidade;

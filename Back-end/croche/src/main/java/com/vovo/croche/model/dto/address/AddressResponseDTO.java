@@ -10,6 +10,7 @@ public class AddressResponseDTO {
     private String cep;
     private String logradouro;
     private String complemento;
+    private String unidade;
     private String localidade;
     private String bairro;
     private String uf;
