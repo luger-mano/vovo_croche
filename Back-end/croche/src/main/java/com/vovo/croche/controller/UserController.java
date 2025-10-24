@@ -4,6 +4,7 @@ import com.vovo.croche.model.dto.admin.UsersResponseAdminDTO;
 import com.vovo.croche.model.dto.user.UserNewPasswordRequestDTO;
 import com.vovo.croche.model.dto.user.UserRequestDTO;
 import com.vovo.croche.model.dto.user.UserResponseDTO;
+import com.vovo.croche.service.UserRegistrationService;
 import com.vovo.croche.service.UserService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -14,13 +15,15 @@ import java.util.List;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/users")
+@RequestMapping("api/v1/users")
 public class UserController {
 
     private final UserService service;
+    private final UserRegistrationService userRegistrationService;
 
-    public UserController(UserService service) {
+    public UserController(UserService service, UserRegistrationService userRegistrationService) {
         this.service = service;
+        this.userRegistrationService = userRegistrationService;
     }
 
     @PostMapping
@@ -41,8 +44,6 @@ public class UserController {
         UserResponseDTO user = service.getUserByEmail(email);
         return ResponseEntity.ok(user);
     }
-
-
     /**
      * Necessário enviar email com um token para o usuário
      * para que ele possa redefinir a senha.
@@ -60,5 +61,11 @@ public class UserController {
         String deletedUser = this.service.deleteUser(id, token);
         return ResponseEntity.status(200).body(deletedUser);
     }
+
+//    @PostMapping("/user-address/{id}")
+//    public ResponseEntity<String> saveUserAddress(@PathVariable("id") UUID id,
+//                                                    @RequestBody AddressCepRequestDTO dto){
+//
+//    }
 
 }
