@@ -1,9 +1,13 @@
 package com.vovo.croche.service;
 
 import com.vovo.croche.exceptions.UserEmailAlreadyExistException;
+import com.vovo.croche.mappers.address.AddressMapper;
 import com.vovo.croche.mappers.user.UserMapper;
+import com.vovo.croche.model.Address;
 import com.vovo.croche.model.Role;
 import com.vovo.croche.model.User;
+import com.vovo.croche.model.dto.address.AddressRequestDTO;
+import com.vovo.croche.model.dto.address.AddressResponseDTO;
 import com.vovo.croche.model.dto.admin.UsersResponseAdminDTO;
 import com.vovo.croche.model.dto.user.UserNewPasswordRequestDTO;
 import com.vovo.croche.model.dto.user.UserRequestDTO;
@@ -28,7 +32,7 @@ public class UserService {
     private final UserMapper mapper;
     private final UserRepository repository;
     private final RoleRepository roleRepository;
-    private BCryptPasswordEncoder passwordEncoder;
+    private final BCryptPasswordEncoder passwordEncoder;
 
     public UserService(UserMapper mapper, UserRepository repository, RoleRepository roleRepository, BCryptPasswordEncoder passwordEncoder) {
         this.mapper = mapper;
