@@ -1,6 +1,7 @@
 package com.vovo.croche.model;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -32,5 +33,10 @@ public class Address {
     private String gia;
     private String ddd;
     private String siafi;
+
+    @OneToOne()
+    @JsonIgnore
+    @JoinColumn(name = "user_id", unique = true)
+    private User user;
 
 }
