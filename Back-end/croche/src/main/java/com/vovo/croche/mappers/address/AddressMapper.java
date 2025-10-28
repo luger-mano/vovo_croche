@@ -12,4 +12,5 @@ public interface AddressMapper {
 
     Address addressCepRequestDTOtoAddress(AddressCepRequestDTO dto);
     AddressResponseDTO addressToAddressResponseDTO(Address address);
+    Address addressResponseDtoToAddress(AddressResponseDTO dto);
 }
