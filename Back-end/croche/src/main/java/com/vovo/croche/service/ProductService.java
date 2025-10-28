@@ -54,9 +54,18 @@ public class ProductService {
         Page<ProductResponseDTO> products = this.repository.findAll(PageRequest.of(page,
                 pageSize,
                 Sort.Direction.DESC,
-                "creationAt")).map(p -> new ProductResponseDTO(p.getProductId(), p.getName(), p.getDescription(), p.getMaterial(), p.getPackaging(), p.getWeight(), p.getAmount(), p.getValue()));
+                "creationAt")).map(p ->
+                new ProductResponseDTO(p.getProductId(),
+                p.getName(),
+                p.getDescription(),
+                p.getMaterial(),
+                p.getPackaging(),
+                p.getWeight(),
+                p.getAmount(),
+                p.getValue()));
 
-        return new ProductDTO(products.getContent(), page, pageSize, products.getTotalPages(), products.getTotalElements());
+        return new ProductDTO(products.getContent(), page, pageSize, products.getTotalPages(),
+                products.getTotalElements());
     }
 
 }

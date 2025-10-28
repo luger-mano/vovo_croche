@@ -71,8 +71,7 @@ public class AddressService {
         }
     }
 
-    public AddressResponseDTO searchAddressByCep(AddressCepRequestDTO dto) throws IOException, InterruptedException {
-
+    public AddressResponseDTO searchAddressByCep(AddressCepRequestDTO dto) {
         try {
             Gson gson = new Gson();
 
@@ -100,6 +99,11 @@ public class AddressService {
                 addressResponse.setBairro(object.getBairro());
                 addressResponse.setUf(object.getUf());
                 addressResponse.setEstado(object.getEstado());
+                addressResponse.setDdd(object.getDdd());
+                addressResponse.setGia(object.getGia());
+                addressResponse.setIbge(object.getIbge());
+                addressResponse.setRegiao(object.getRegiao());
+                addressResponse.setSiafi(object.getSiafi());
 
                 return addressResponse;
             }
