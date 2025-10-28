@@ -32,7 +32,7 @@ public class User implements Serializable {
     private String email;
     private String password;
     private String phone;
-    @OneToOne
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
     private Address address;
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinTable(
