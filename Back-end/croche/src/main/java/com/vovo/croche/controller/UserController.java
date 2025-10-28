@@ -19,11 +19,10 @@ import java.util.UUID;
 public class UserController {
 
     private final UserService service;
-    private final UserRegistrationService userRegistrationService;
 
-    public UserController(UserService service, UserRegistrationService userRegistrationService) {
+
+    public UserController(UserService service) {
         this.service = service;
-        this.userRegistrationService = userRegistrationService;
     }
 
     @PostMapping
@@ -62,10 +61,5 @@ public class UserController {
         return ResponseEntity.status(200).body(deletedUser);
     }
 
-//    @PostMapping("/user-address/{id}")
-//    public ResponseEntity<String> saveUserAddress(@PathVariable("id") UUID id,
-//                                                    @RequestBody AddressCepRequestDTO dto){
-//
-//    }
 
 }
